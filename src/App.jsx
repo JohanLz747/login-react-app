@@ -1,4 +1,4 @@
-import { useState } from 'react'
+/*import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -32,4 +32,36 @@ function App() {
   )
 }
 
-export default App
+export default App*/
+import { useEffect, useState } from "react";
+
+function App() {
+  const [pokemons, setPokemons] = useState([]);
+  const fetchPokemons = async () => {
+    const response = await fetch(
+      "https://pokeapi.co/api/v2/pokemon?offset=0&limit=8"
+    );
+    const data = await response.json();
+    const results = data.results;
+    setPokemons(results)
+    console.log(results);
+  };
+
+  // fetchPokemons();
+
+  useEffect(() => {
+    fetchPokemons();
+  }, []);
+
+  return (
+    <>
+      <h1 className="Title">Pokemon list</h1>
+      {pokemons.map((pokemon) => (
+        <li> {pokemon.name}</li>
+
+      ))}
+    </>
+  );
+}
+
+export default App;
